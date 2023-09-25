@@ -1,0 +1,56 @@
+@import url('https://fonts.cdnfonts.com/css/euclid-circular-a');
+
+
+.container{
+    background-color: #151A30;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+.box{
+    background-color: white;
+    padding: 70px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    transition: all 0.5s;
+    border-radius: 10px;
+}
+
+.adminInput{
+    margin-bottom: 15px;
+}
+
+.text{
+    font-size: 30px;
+font-family: Euclid Circular A;
+font-weight: 500;
+text-align: center;
+margin-bottom: 20px;
+color: #151A30;
+}
+.button{
+    cursor: pointer;
+    font-size: 22px;
+    font-family: Euclid Circular A;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    margin-top: 15px;
+    background-color: #151A30;
+    border-radius: 4px;
+    padding: 10px 0 ;
+}
+
+
+
+.box:hover{
+    box-shadow: rgba(60, 60, 60, 0.56) 0px 22px 70px 4px;
+
+}
