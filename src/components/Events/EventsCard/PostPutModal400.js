@@ -8,7 +8,6 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import PostRequest from "../../Api/PostRequest/PostRequest";
 import { memo } from "react";
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -23,7 +22,8 @@ import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../../stores/tokenBoolean";
 import EditIcon from '@mui/icons-material/Edit';
 import Login from "../../Login/Login";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const style = {
     position: 'absolute',
     top: '50%',
@@ -38,22 +38,18 @@ const style = {
 // import TimePickerValue from "../TimePicker/TimePicker";
 // import FormikFieldDateTimePicker from "../FormikFieldDateTimePicker/FormikFieldDateTimePicker";
 
-function PostPutModal({ artistName, id, announcementId, setEventContainer, eventContainer, choosenLanguage, event}) {
+function PostPutModal({ setOpen, artistName, id, announcementId, setEventContainer, eventContainer, choosenLanguage, event}) {
     const dispatch = useDispatch()
     const { tokenBoolean } = useSelector(state => state.tokenBoolean)
 
-    // const [open, setOpen] = useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
-    
-    // const [announcementId, setAnnouncementId] = useState('')
     const Token = localStorage.getItem("Token");
     const [value, setValue] = useState(dayjs('2022-04-17T18:00'));
     const [eventsDate, setEventsDate] = useState('')
     const [getLang, setGetLang] = useState('')
     const [langAnn, setLangAnn] = useState('');
     const [inputVal, setInputVal] = useState('');
-    // console.log(annDataLang);
+    const [err, setErr] = useState('');
+
     let ObjAnnDataLang = {}
     // if(annDataLang.imageSrc){
         ObjAnnDataLang = {
@@ -65,17 +61,6 @@ function PostPutModal({ artistName, id, announcementId, setEventContainer, event
             id: event.id 
         }
 
-    // }else{
-        // console.log('FALSE');
-        // ObjAnnDataLang = {
-        //     title: '',
-        //     artist: '',
-        //     desc: '',
-        //     hall: '',
-        //     link: '',
-        //     id: event.id 
-        // }
-    // }
 
     const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
         initialValues: {
@@ -88,11 +73,7 @@ function PostPutModal({ artistName, id, announcementId, setEventContainer, event
         },
         onSubmit: values => {
             setInputVal(values)
-            // postAnn(values)
-            // putTrans(values, id)
             postTrans(values)
-
-            // <PostRequest data={values}/>
         }
     })
     // GET
@@ -101,64 +82,14 @@ function PostPutModal({ artistName, id, announcementId, setEventContainer, event
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
             .then(res => res.json())
             .then(data => setGetLang(data))
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [])
-
-    // http://logicbackend-001-site1.htempurl.com/
-    // POST
-    // Yeni elan yaratmaq
-    
-    // const putTrans = useCallback((data, id) => {
-    //     console.log(data);
-    //     console.log(id);
-    //     console.log(announcementId);
-    //     const annData = {
-    //         title: data.title,
-    //         ticketLink: data.link,
-    //         artistName: data.artist,
-    //         place: data.hall,
-    //         imageFile: data.imageFile,
-    //         description: data.desc,
-    //         announcementId: announcementId,
-    //         languageId: choosenLanguage,
-    //         // id: id
-    //     }
-    //     const formDataPut = new FormData();
-    //     for (const key in annData) {
-    //         if (annData.hasOwnProperty(key)) {
-    //           formDataPut.append(key, annData[key]);
-    //         }
-    //       }
-    // console.log(annData);
-    // // setOpen(false)
-    //     fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/${event.id}`, {
-    //         method: 'PUT',
-    //         body: formDataPut,
-    //         headers: {
-    //             // "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${Token}`
-    //         }
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {console.log(data)
-    //             dispatch(setTokenBoolean(true))
-    //             // setEventContainer(oldArray => [...oldArray, data])
-
-
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //             // dispatch(setTokenBoolean(false))
-    //         })
-    // })
-
-
 
 
     const postTrans = useCallback((data) => {
         const annData = {
             title: data.title,
-            imageName: data.title,
+            // imageName: data.title,
             ticketLink: data.link,
             artistName: data.artist,
             place: data.hall,
@@ -167,16 +98,15 @@ function PostPutModal({ artistName, id, announcementId, setEventContainer, event
             announcementId: announcementId,
             languageId: choosenLanguage,
         }
-        console.log(annData);
         const formData = new FormData();
         for (const key in annData) {
             if (annData.hasOwnProperty(key)) {
               formData.append(key, annData[key]);
             }
           }
-        console.log(formData.get('place'));
-    console.log(annData);
 
+    if(annData.title && annData.ticketLink && annData.artistName && annData.imageFile && annData.description && annData.place ){
+    setOpen(false)
         fetch('http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation', {
             method: 'POST',
             body: formData,
@@ -186,14 +116,20 @@ function PostPutModal({ artistName, id, announcementId, setEventContainer, event
             }
         })
             .then(res => res.json())
-            .then(data => {console.log(data)
+            .then(data => {
                 dispatch(setTokenBoolean(true))
                 // setEventContainer(oldArray => [...oldArray, data])
             })
             .catch(err => {
-                console.log(err)
+                setErr(err)
                 // dispatch(setTokenBoolean(false))
             })
+        }
+        else{
+            toast.error("Bütün xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
 
 
@@ -201,10 +137,11 @@ function PostPutModal({ artistName, id, announcementId, setEventContainer, event
 
     return (
         <>
-            <Box className='flex items-center w-full'>
-                <Box className=' mx-auto'>
+           {/* <ToastContainer /> */}
 
-                    {/* <PostRequest  data={values}/> */}
+            <Box className='flex items-center w-full'>
+                <Box className='w-full'>
+
         
                         <Box >
                         {/* <Box className={styles.box}> */}

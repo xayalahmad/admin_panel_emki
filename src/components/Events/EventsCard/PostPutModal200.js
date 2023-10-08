@@ -8,7 +8,6 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import PostRequest from "../../Api/PostRequest/PostRequest";
 import { memo } from "react";
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -22,7 +21,8 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../../stores/tokenBoolean";
 import EditIcon from '@mui/icons-material/Edit';
-import Login from "../../Login/Login";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const style = {
     position: 'absolute',
@@ -38,10 +38,9 @@ const style = {
 // import TimePickerValue from "../TimePicker/TimePicker";
 // import FormikFieldDateTimePicker from "../FormikFieldDateTimePicker/FormikFieldDateTimePicker";
 
-function PostPutModal({annDataLang, artistName, id, announcementId, setEventContainer, eventContainer, choosenLanguage, event}) {
+function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announcementId, setEventContainer, eventContainer, choosenLanguage, event}) {
     const dispatch = useDispatch()
     const { tokenBoolean } = useSelector(state => state.tokenBoolean)
-
     // const [open, setOpen] = useState(false);
     // const handleOpen = () => setOpen(true);
     // const handleClose = () => setOpen(false);
@@ -53,83 +52,59 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
     const [getLang, setGetLang] = useState('')
     const [langAnn, setLangAnn] = useState('');
     const [inputVal, setInputVal] = useState('');
-    console.log(annDataLang);
-    let ObjAnnDataLang = {}
-    // if(annDataLang.imageSrc){
-        ObjAnnDataLang = {
-            title: annDataLang.title,
-            artist: annDataLang.artistName,
-            desc: annDataLang.description,
-            hall: annDataLang.place,
-            link: annDataLang.ticketLink,
-            id: event.id 
-        }
+    const [err, setErr] = useState('');
 
-    // }else{
-        // console.log('FALSE');
-        // ObjAnnDataLang = {
-        //     title: '',
-        //     artist: '',
-        //     desc: '',
-        //     hall: '',
-        //     link: '',
-        //     id: event.id 
-        // }
-    // }
-
-    const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
+  
+    const { handleSubmit, handleChange, values, setFieldValue,  resetForm } = useFormik({
         initialValues: {
             title: annDataLang.title,
-            artist: annDataLang.artistName,
-            desc: annDataLang.description,
-            hall: annDataLang.place,
-            link: annDataLang.ticketLink,
-            id: event.id 
+            artistName: annDataLang.artistName,
+            description: annDataLang.description,
+            place: annDataLang.place,
+            ticketLink: annDataLang.ticketLink,
+            id: annDataLang.id
         },
         onSubmit: values => {
             setInputVal(values)
             // postAnn(values)
             putTrans(values)
 
-            // <PostRequest data={values}/>
         }
     })
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
-    useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
-            .then(res => res.json())
-            .then(data => setGetLang(data))
-            .catch(err => console.log(err))
-    }, [])
+    // useEffect(() => {
+    //     fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+    //         .then(res => res.json())
+    //         .then(data => setGetLang(data))
+    //         .catch(err => console.log(err))
+    // }, [])
 
     // http://logicbackend-001-site1.htempurl.com/
     // POST
     // Yeni elan yaratmaq
-    
+
     const putTrans = useCallback((data, id) => {
-      
         const annData = {
             title: data.title,
-            ticketLink: data.link,
-            artistName: data.artist,
-            place: data.hall,
+            ticketLink: data.ticketLink,
+            artistName: data.artistName,
+            place: data.place,
             imageFile: data.imageFile,
-            description: data.desc,
-            announcementId: announcementId,
+            description: data.description,
+            announcementId: event.id,
             languageId: choosenLanguage,
-            id: event.id
+            id: data.id
         }
-        console.log(annData);
         const formDataPut = new FormData();
         for (const key in annData) {
             if (annData.hasOwnProperty(key)) {
               formDataPut.append(key, annData[key]);
             }
           }
-    console.log(annData);
-    // setOpen(false)
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/${event.id}`, {
+          if(annData.imageFile){
+    setOpen(false)
+        fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/${data.id}`, {
             method: 'PUT',
             body: formDataPut,
             headers: {
@@ -138,16 +113,22 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
             }
         })
             .then(res => res.json())
-            .then(data => {console.log(data)
+            .then(data => {
                 dispatch(setTokenBoolean(true))
-                // setEventContainer(oldArray => [...oldArray, data])
+                setEventContainer(oldArray => [...oldArray, data])
 
 
             })
             .catch(err => {
-                console.log(err)
+                setErr(err)
                 // dispatch(setTokenBoolean(false))
             })
+        }
+        else{
+            toast.error("Şəkil və digər xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
 
 
@@ -156,10 +137,11 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
 
     return (
         <>
-            <Box className='flex items-center w-full'>
-                <Box className=' mx-auto'>
+           {/* <ToastContainer /> */}
 
-                    {/* <PostRequest  data={values}/> */}
+            <Box className='flex items-center w-full'>
+                <Box className='w-full'>
+
         
                         <Box >
                         {/* <Box className={styles.box}> */}
@@ -181,9 +163,9 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
                                 </Box>
                                 <Box className=''>
                                     <TextField className='w-full'
-                                        value={values.artist}
+                                        value={values.artistName}
                                         onChange={handleChange}
-                                        id='artist'
+                                        id='artistName'
                                         sx={{
                                             input: {
                                                 color: '#151A30',
@@ -198,9 +180,9 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
                                         multiline
                                         rows={2}
                                         // defaultValue="Default Value"
-                                        value={values.desc}
+                                        value={values.description}
                                         onChange={handleChange}
-                                        id='desc'
+                                        id='description'
                                         sx={{
                                             input: {
                                                 color: '#151A30',
@@ -218,11 +200,6 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
       <VisuallyHiddenInput type="file" />
     </Button> */}
                                     <Box className={styles.addImage}>
-
-                                        {/* <input className=" bg-pink text-main" id="image" name="image" type="file" title = "Choose a video please"  onChange={(event) => {
-        setFieldValue("image", event.currentTarget.files[0]);
-    }}
-     /> */}
                                         <input onChange={(event) => {
                                             setFieldValue("imageFile", event.currentTarget.files[0])
                                         }} type="file" name="uploadfile" id="img" style={{ display: 'none' }} />
@@ -235,9 +212,9 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
                                 <Box className='mt-2'>
                                     <Box className='md:mr-1 mb-2 md:mb-0 w-full'>
                                         <TextField className='w-full m-6'
-                                            value={values.hall}
+                                            value={values.place}
                                             onChange={handleChange}
-                                            id='hall'
+                                            id='place'
                                             sx={{
                                                 input: {
                                                     color: '#151A30',
@@ -253,9 +230,9 @@ function PostPutModal({annDataLang, artistName, id, announcementId, setEventCont
 
                                 <Box className='my-2'>
                                     <TextField className='w-full'
-                                        value={values.link}
+                                        value={values.ticketLink}
                                         onChange={handleChange}
-                                        id='link'
+                                        id='ticketLink'
                                         sx={{
                                             input: {
                                                 color: '#151A30',

@@ -19,27 +19,26 @@ const style = {
   p: 4,
 };
 
-export default function ModalTranslations({event}) {
+export default function ModalTranslations({event, setEventContainer}) {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [allLanguages, setAllLanguages] = useState('');
   const [getlang, setGetLang] = useState([]);
-
+const [err, setErr] = useState('')
 
   useEffect(() => {
     async function getLangFunction(){
       await fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
       .then(res => res.json())
       .then(data => {setGetLang(data)
-        console.log(data)}
+   }
         )
-        .catch(err => console.log(err))
+        .catch(err => setErr(err))
       }
       getLangFunction()
 }, [allLanguages])
-console.log(getlang);
   return (
     <div>
       <Box onClick={handleOpen} className={styles.button2}>
@@ -52,7 +51,7 @@ console.log(getlang);
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <TabsLanguage event={event} getlang={getlang} setGetLang={setGetLang}/>
+          <TabsLanguage setEventContainer={setEventContainer} setOpen={setOpen} event={event} getlang={getlang} setGetLang={setGetLang}/>
         </Box>
       </Modal>
     </div>

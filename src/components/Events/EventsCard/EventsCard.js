@@ -36,31 +36,36 @@ const deleteEvent = (id) => {
 }
   return (
     <Card sx={{ display: 'flex', margin: '15px', width: '500px', height: '270px' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
-          <Box className='flex'>
-
-
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '250px', justifyContent: 'space-between'}}>
+        <CardContent >
+          <Box className='flex-col justify-between  '>
+   
+          <Box className='flex-col w-full h-36'>
+          <Box className='flex justify-between'>
           <Typography component="div" variant="h5">
             {event.translations[0]?.artistName}
           </Typography>
                <DeleteIcon onClick={() => deleteEvent(`${event.id}`) }/>
           </Box>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-          {event.translations[0]?.place} {event.hours}
+          {event.translations[0]?.place}
           </Typography>
+          <Typography variant="subtitle1" color="text.secondary" component="div">
+          {event.date.split('T')[0]}
+          </Typography>
+          </Box>
 
-{/* <EditModal /> */}
-{/* <EventsModal eventContainer={eventContainer} setEventContainer={setEventContainer} announcementId={event.id} id={event.translations[0]?.id} artistName={event.translations[0]?.artistName}/> */}
-           <Box>
+           <Box className='w-full'>
             <AnnModal eventContainer={eventContainer} setEventContainer={setEventContainer} announcementId={event.id} id={event.translations[0]?.id} artistName={event.translations[0]?.artistName} event={event}/>
 
-<ModalTranslations event={event}/>
+<ModalTranslations setEventContainer={setEventContainer} event={event}/>
+           </Box>
            </Box>
 
         </CardContent>
       </Box>
       <CardMedia
+        className={styles.eventCardImg}
         component="img"
         sx={{ width: 250 }}
         image={event.translations[0]?.imageSrc}

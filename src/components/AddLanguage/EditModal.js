@@ -8,6 +8,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import styles from './AddLanguage.module.css'
 import { TextField } from '@mui/material';
 import { useState } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const style = {
     position: 'absolute',
     top: '50%',
@@ -22,6 +24,7 @@ const style = {
 
 export default function EditModal({item, allLanguages, setAllLanguages, setGetLang}) {
     const Token = localStorage.getItem("Token");
+    const [err, setErr] = useState('');
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -42,7 +45,9 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
             code: values.code,
             id: item.id
         }
-        console.log(editData);
+        if(values.title && values.code){
+            
+
         fetch(`http://logicbackend-001-site1.htempurl.com/api/Language/${item.id}`,  {
             method: 'PUT',
             headers: {
@@ -60,11 +65,19 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
         .then(res => res.json())
         .then(data => setGetLang(data))
-        .catch(err => console.log(err))
+        .catch(err => setErr(err))
+        }
+        else{
+            toast.error("Bütün xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
         }
 
     return (
         <div>
+           <ToastContainer />
+
             <EditIcon onClick={handleOpen} className={styles.editicon} />
             <Modal
                 open={open}

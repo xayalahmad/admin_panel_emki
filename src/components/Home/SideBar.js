@@ -15,6 +15,26 @@ export default function SideBar(){
                             Tədbir
                         </Box>
                     </Link>
+                    <Link to="/blog">{" "}
+                        <Box className={styles.item}>
+                            Bloq
+                        </Box>
+                    </Link>
+                    <Link to="/sponsor">{" "}
+                        <Box className={styles.item}>
+                            Sponsor
+                        </Box>
+                    </Link>
+                    <Link to="/artist">{" "}
+                        <Box className={styles.item}>
+                            Sənətçi
+                        </Box>
+                    </Link>
+                    <Link to="/information">{" "}
+                        <Box className={styles.item}>
+                            Məlumat
+                        </Box>
+                    </Link>
                     <Link to="/language">{" "}
                         <Box className={styles.item}>
                             Dil

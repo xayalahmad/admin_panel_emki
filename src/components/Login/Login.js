@@ -5,11 +5,14 @@ import { useFormik } from "formik";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from 'react-redux';
+import moment from 'moment'
 import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../stores/tokenBoolean";
+import { setExpDate } from "../../stores/expDate";
 export default function Login() {
   const dispatch = useDispatch()
   const { tokenBoolean } = useSelector(state => state.tokenBoolean)
+  const { expDate } = useSelector(state => state.expDate)
     const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
         initialValues: {
             username: '',
@@ -54,7 +57,13 @@ const postLogin = (values) => {
     .then(responseData => {
       console.log(responseData);
       if(responseData.token){
+        let x =  new Date( responseData.expiration)
+        let expDate = x.toLocaleString()
         localStorage.setItem("Token", responseData.token);
+        localStorage.setItem("aTE", responseData.accessTokenExpiration);
+        localStorage.setItem("rTE", responseData.refreshTokenExpiration);
+        localStorage.setItem("rToken", responseData.refreshToken);
+        dispatch(setExpDate(expDate))
       }
       dispatch(setTokenBoolean(true))
     })

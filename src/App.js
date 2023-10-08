@@ -20,8 +20,8 @@ function App() {
             :
             <Login />
           }
-          <AddEvent />
-          <AddLanguage />
+          {/* <AddEvent /> */}
+          {/* <AddLanguage /> */}
 
         {/* </BrowserRouter> */}
       </ThemeProvider>

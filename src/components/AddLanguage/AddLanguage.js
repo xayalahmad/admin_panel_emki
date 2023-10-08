@@ -6,14 +6,16 @@ import { styled } from '@mui/material/styles';
 import { useCallback, useEffect, useState } from "react";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import PostRequest from "../Api/PostRequest/PostRequest";
 import { memo } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Login from "../Login/Login";
 import EditModal from "./EditModal";
 function AddEvent() {
     const Token = localStorage.getItem("Token");
+    const [err, setErr] = useState('');
     const [getlang, setGetLang] = useState([]);
     const [allLanguages, setAllLanguages] = useState('');
     const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
@@ -22,11 +24,9 @@ function AddEvent() {
             code: '',
         },
         onSubmit: values => {
-            console.log(values);
             postLang(values)
         }
     })
-    // console.log(Token);
 
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
@@ -34,7 +34,7 @@ function AddEvent() {
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
             .then(res => res.json())
             .then(data => setGetLang(data))
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [allLanguages])
     // http://logicbackend-001-site1.htempurl.com/
     // POST
@@ -43,7 +43,8 @@ function AddEvent() {
     // Post
     // Yeni dil yaratmaq
     const postLang = useCallback((values) => {
-        console.log(values);
+  if(values.title && values.code){
+
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language', {
             method: 'POST',
             body: JSON.stringify(values),
@@ -54,11 +55,16 @@ function AddEvent() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setAllLanguages(oldArray => [...oldArray, data])
             })
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
+        } else{
+            toast.error("Bütün xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
+    
     const deleteLang = (id) => {
         fetch(`http://logicbackend-001-site1.htempurl.com/api/Language/${id}`,  {
             method: 'DELETE',
@@ -69,17 +75,15 @@ function AddEvent() {
         })
         setGetLang(getlang.filter(languages => languages.id != id))
         // setAllLanguages(allLanguages.filter(languages => languages.id != id))
-        console.log(getlang);
-        console.log(id);
     }
 
 
 
     return (
         <>
+           <ToastContainer />
             <Box className='flex items-center w-full'>
                 <Box className='md:w-2/5 sm:w-1/2 w-3/4  mx-auto'>
-                    {/* <PostRequest  data={values}/> */}
                     <form onSubmit={handleSubmit}>
                         <Box className='md:flex block'>
                             <Box className='md:mr-1 mb-2 md:mb-0 w-full'>

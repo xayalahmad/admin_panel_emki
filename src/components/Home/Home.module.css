@@ -2,7 +2,7 @@
 .itemsContainer1{
     background-color: #151A30;
     padding: 32px;
-    height: 100vh;
+    min-height: 100vh;
 
 }
 .itemsContainer{
