@@ -12,8 +12,11 @@ import Login from "../Login/Login";
 import EditModal from "./EditModal";
 import styles from './AddArtist.module.css'
 import ArtistCard from "./ArtistCard";
+import { ToastContainer, toast } from "react-toastify";
+
 function AddArtist({setEventContainer}) {
     const Token = localStorage.getItem("Token");
+    const [err, setErr] = useState('');
     const [getlang, setGetLang] = useState([]);
     const [allLanguages, setAllLanguages] = useState('');
     const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
@@ -24,7 +27,6 @@ function AddArtist({setEventContainer}) {
             postLang(values)
         }
     })
-    // console.log(Token);
 
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
@@ -32,9 +34,8 @@ function AddArtist({setEventContainer}) {
         fetch('http://logicbackend-001-site1.htempurl.com/api/Artist')
             .then(res => res.json())
             .then(data => {setGetLang(data)
-                console.log(data);
             })
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [allLanguages])
     // http://logicbackend-001-site1.htempurl.com/
     // POST
@@ -47,14 +48,14 @@ function AddArtist({setEventContainer}) {
             name: data.name,
             imageFile: data.imageFile,
         }
+  if(annData.name && annData.imageFile){       
+
         const formData = new FormData();
         for (const key in annData) {
             if (annData.hasOwnProperty(key)) {
               formData.append(key, annData[key]);
             }
           }
-        console.log(formData.get('imageFile'));
-    console.log(annData);
         fetch('http://logicbackend-001-site1.htempurl.com/api/Artist', {
             method: 'POST',
             body: formData,
@@ -65,10 +66,15 @@ function AddArtist({setEventContainer}) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setAllLanguages(oldArray => [...oldArray, data])
             })
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
+        }
+        else{
+            toast.error("Şəkil və digər xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
     const deleteLang = (id) => {
         fetch(`http://logicbackend-001-site1.htempurl.com/api/Artist/${id}`,  {
@@ -80,14 +86,14 @@ function AddArtist({setEventContainer}) {
         })
         setGetLang(getlang.filter(languages => languages.id != id))
         // setAllLanguages(allLanguages.filter(languages => languages.id != id))
-        console.log(getlang);
-        console.log(id);
     }
 
 
 
     return (
         <>
+           <ToastContainer />
+
             <Box className='flex items-center w-full '>
                 <Box className='m-4 mt-5 w-full'>
                     <form onSubmit={handleSubmit}>
@@ -111,7 +117,7 @@ function AddArtist({setEventContainer}) {
 <input onChange={(event) => {
     setFieldValue("imageFile", event.currentTarget.files[0])
 }} type="file" name="uploadfile" id="img" style={{ display: 'none' }} />
-<label className="w-96 inline-block py-3 px-8" for="img" >Şəkil əlavə et</label>
+<label className="w-96 inline-block py-3 px-8" htmlFor="img" >Şəkil əlavə et</label>
 </Box>
                         </Box>
 
@@ -129,7 +135,7 @@ function AddArtist({setEventContainer}) {
                         Mövcud sənətçilər:
                     </Box>
                     <Box className='flex w-full justify-between flex-wrap'>
-                    {getlang.map((q, i) => 
+                    {getlang.reverse().map((q, i) => 
                     <ArtistCard setEventContainer={setEventContainer} setGetLang={setGetLang} getlang={getlang} setAllLanguages={setAllLanguages} allLanguages={allLanguages} key={i} artist={q}/>
                     )}
                 </Box>

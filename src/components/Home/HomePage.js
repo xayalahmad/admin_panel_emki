@@ -1,9 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { setTokenBoolean } from "../../stores/tokenBoolean";
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { Box } from '@mui/material';
+import styles from './Home.module.css'
 export default function HomePage() {
   const dispatch = useDispatch()
-
+const [err, setErr] = useState('')
     // const { expDate } = useSelector(state => state.expDate)
     const { tokenBoolean } = useSelector(state => state.tokenBoolean)
     const Token = localStorage.getItem("Token");
@@ -23,22 +26,24 @@ export default function HomePage() {
 const now = new Date(thisTime);
 const dateRefresh= new Date(refreshTokenExpiration);
 const dateAccess = new Date(accessTokenExpiration);
-console.log(now);
-console.log(dateRefresh);
-console.log(dateAccess);
+// console.log(now);
+// console.log(dateAccess);
+// console.log(dateRefresh);
 
-console.log('acccess' , Token);
-console.log('refresh' , refreshToken);
+// console.log('acccess' , Token);
+// console.log('refresh' , refreshToken);
+// useEffect(() => {
+
 if(Date.parse(now) <  Date.parse(dateAccess)){
-    console.log('qaydasindadi');
+    // console.log('qaydasindadi');
 }
 else{
-    console.log('logine get');
+    // console.log('logine get');
     const annData = {
         accessToken: Token,
         refreshToken: refreshToken,
     }
-    console.log(annData);
+    // console.log(annData);
     fetch('http://logicbackend-001-site1.htempurl.com/api/Token/Refresh', {
         method: 'POST',
         body: JSON.stringify(annData),
@@ -49,16 +54,12 @@ else{
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            
         localStorage.setItem("Token", data.accessToken);
-        localStorage.setItem("refreshToken",data.refreshToken);
-
-        })
+        localStorage.setItem("rToken",data.refreshToken);
+        
+    })
         .catch(err => {
-            console.log(err)
-            // dispatch(setTokenBoolean(false))     
-
+            setErr(err)
         })
 
 }
@@ -68,10 +69,10 @@ else{
 
 
 if(Date.parse(now) <  Date.parse(dateRefresh)){
-    console.log('qaydasindadi');
+    // console.log('qaydasindadi');
 }
 else{
-    console.log('logine get');
+    // console.log('logine get');
 
     fetch('http://logicbackend-001-site1.htempurl.com/api/Token/Revoke', {
         method: 'POST',
@@ -88,8 +89,8 @@ else{
 
         })
         .catch(err => {
-            console.log(err)
             dispatch(setTokenBoolean(false))
+            setErr(err)
 
         })
 
@@ -100,9 +101,20 @@ else{
     return (
         <>
         Xoş Gəlmisiniz !
-        {Token}
-        {refreshToken}
         </>
 
     )
-}}
+}
+// }, [])
+
+
+return (
+    <Box className='flex items-center justify-center w-full'>
+        <Box  className={styles.title}>
+    Emki Production Admin Panel
+        </Box>
+    </Box>
+
+)
+
+}

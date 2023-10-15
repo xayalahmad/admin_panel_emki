@@ -5,6 +5,7 @@ import styles from '../EventsCard/EventsCard.module.css'
 export default function GetEvent({ eventContainer, setEventContainer }) {
     const [allEvent, setAllEvent] = useState('');
     const [getEvent, setGetEvent] = useState([]);
+    const [err, setErr] = useState('');
 
 
     // GET
@@ -14,13 +15,10 @@ export default function GetEvent({ eventContainer, setEventContainer }) {
             .then(res => res.json())
             .then(data => {
                 setGetEvent(data[0])
-                // console.log(data)
             }
             )
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [eventContainer])
-
-    console.log(getEvent);
 
     return (
         <>

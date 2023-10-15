@@ -186,6 +186,7 @@ transition: all .5s;
 
 
 .eventCardImg{
+  /* background-color: #f1f1f1; */
   background-position: center;
   background-size: contain;
 background-repeat: no-repeat;

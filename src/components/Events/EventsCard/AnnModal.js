@@ -107,10 +107,12 @@ function AnnModal({ event, setEventContainer }) {
                 setEventContainer(oldArray => [...oldArray, data])
             })
             .catch(err => {
+            setErr(err)
+
             })
         }
         else{
-            toast.error("Bütün event doldurun", {
+            toast.error("Bütün xanaları doldurun", {
               position: toast.POSITION.TOP_CENTER
             });
           }
@@ -127,7 +129,7 @@ function AnnModal({ event, setEventContainer }) {
             <Box className='flex items-center w-full'>
                 {/* <Box> */}
                 <Box onClick={handleOpen} className={styles.button1}>
-                    Ümumi dəyiş
+                    Ümumi məlumatlar
                 </Box>
                 <Modal
                     open={open}

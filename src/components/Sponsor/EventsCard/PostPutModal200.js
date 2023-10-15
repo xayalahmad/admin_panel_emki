@@ -41,7 +41,6 @@ const style = {
 function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announcementId, setEventContainer, eventContainer, choosenLanguage, sponsor}) {
     const dispatch = useDispatch()
     const { tokenBoolean } = useSelector(state => state.tokenBoolean)
-console.log(sponsor);
     // const [open, setOpen] = useState(false);
     // const handleOpen = () => setOpen(true);
     // const handleClose = () => setOpen(false);
@@ -51,13 +50,10 @@ console.log(sponsor);
     const [value, setValue] = useState(dayjs('2022-04-17T18:00'));
     const [eventsDate, setEventsDate] = useState('')
     const [getLang, setGetLang] = useState('')
+    const [err, setErr] = useState('');
     const [langAnn, setLangAnn] = useState('');
     const [inputVal, setInputVal] = useState('');
-    console.log(annDataLang);
 
-    // }else{
-        // console.log('FALSE');
-        // }
   
     const { handleSubmit, handleChange, values, setFieldValue,  resetForm } = useFormik({
         initialValues: {
@@ -70,25 +66,11 @@ console.log(sponsor);
             putTrans(values)
         }
     })
-    // GET
-    // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
-    // useEffect(() => {
-    //     fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
-    //         .then(res => res.json())
-    //         .then(data => setGetLang(data))
-    //         .catch(err => console.log(err))
-    // }, [])
-
-    // http://logicbackend-001-site1.htempurl.com/
-    // POST
-    // Yeni elan yaratmaq
-
+  
     const putTrans = useCallback((data, id) => {
-      console.log(data);
         const annData = {
             imageFile: data.imageFile,
         }
-        console.log(annData);
         const formDataPut = new FormData();
         for (const key in annData) {
             if (annData.hasOwnProperty(key)) {
@@ -96,7 +78,6 @@ console.log(sponsor);
             }
           }
           if(values.imageFile){
-    console.log(annData);
     setOpen(false)
         fetch(`http://logicbackend-001-site1.htempurl.com/api/Sponsor/${data.id}`, {
             method: 'PATCH',
@@ -107,19 +88,15 @@ console.log(sponsor);
             }
         })
             .then(res => res.json())
-            .then(data => {console.log(data)
-                dispatch(setTokenBoolean(true))
+            .then(data => {
                 setEventContainer(oldArray => [...oldArray, data])
-
-
             })
             .catch(err => {
-                console.log(err)
-                // dispatch(setTokenBoolean(false))
+                setErr(err)
             })
         }
         else{
-            toast.error("Şəkil və digər xanaları doldurun", {
+            toast.error("Şəkil xanasını doldurun", {
               position: toast.POSITION.TOP_CENTER
             });
           }

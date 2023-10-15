@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../../stores/tokenBoolean";
 import { DateField } from '@mui/x-date-pickers/DateField';
 import moment from 'moment'
+import { ToastContainer, toast } from "react-toastify";
 
 const style = {
     position: 'absolute',
@@ -95,6 +96,9 @@ function AddEvent({ setEventContainer }) {
             date: moment(dataVal.date).add(1, 'days'),
             hours: dataVal.time,
         }
+        if(annData.minPrice && annData.maxPrice && annData.date && annData.hours){
+
+      
         fetch('http://logicbackend-001-site1.htempurl.com/api/Announcement', {
             method: 'POST',
             body: JSON.stringify(annData),
@@ -114,6 +118,12 @@ function AddEvent({ setEventContainer }) {
             .catch(err => {
                 console.log(err)
             })
+        }
+        else{
+            toast.error("Şəkil və digər xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
 
 
@@ -139,6 +149,10 @@ function AddEvent({ setEventContainer }) {
         }
         console.log(formData.get('place'));
         console.log(annData);
+
+        if(annData.title && annData.imageName && annData.ticketLink && annData.artistName && annData.place && annData.imageFile && annData.description && annData.announcementId && annData.languageId){
+
+
         setOpen(false)
 
         fetch('http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation', {
@@ -159,48 +173,16 @@ function AddEvent({ setEventContainer }) {
                 console.log(err)
                 // dispatch(setTokenBoolean(false))
             })
+                        
+        }
+         else{
+            toast.error("Şəkil və digər xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
 
 
-
-    const putTrans = useCallback((data, id) => {
-        const annData = {
-            title: data.title,
-            ticketLink: data.link,
-            artistName: data.artist,
-            place: data.hall,
-            imageFile: data.imageFile,
-            description: data.desc,
-            announcementId: id,
-            languageId: data.lang,
-            id: 73
-        }
-        const formDataPut = new FormData();
-        for (const key in annData) {
-            if (annData.hasOwnProperty(key)) {
-                formDataPut.append(key, annData[key]);
-            }
-        }
-        console.log(annData);
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/73`, {
-            method: 'PUT',
-            body: formDataPut,
-            headers: {
-                // "Content-Type": "application/json",
-                "Authorization": `Bearer ${Token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                dispatch(setTokenBoolean(true))
-
-            })
-            .catch(err => {
-                console.log(err)
-                // dispatch(setTokenBoolean(false))
-            })
-    })
 
 
 
@@ -208,6 +190,8 @@ function AddEvent({ setEventContainer }) {
 
     return (
         <>
+           <ToastContainer />
+
             <Box className='flex items-center w-full'>
                 <Box className=''>
                     <Box onClick={handleOpen}>

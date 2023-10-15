@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../../stores/tokenBoolean";
 import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment'
+import { ToastContainer, toast } from "react-toastify";
 
 const style = {
     position: 'absolute',
@@ -74,6 +75,7 @@ function AnnModal({event, setEventContainer}) {
         date: moment(dataVal.date).add(1, 'days'),
         id: event.id
     }
+  if(annData.date && annData.id){       
     setOpen(false)
     fetch(`http://logicbackend-001-site1.htempurl.com/api/Post/${event.id}`, {
         method: 'PUT',
@@ -95,6 +97,12 @@ function AnnModal({event, setEventContainer}) {
         .catch(err => {
             setErr(err)
         })
+    }
+    else{
+        toast.error("Bütün xanaları doldurun", {
+          position: toast.POSITION.TOP_CENTER
+        });
+      }
 })
 
 

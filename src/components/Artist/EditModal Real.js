@@ -32,19 +32,16 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
         },
         onSubmit: values => {
             editLang(values)
-            console.log(values);
         }
     })
 
 
     const editLang = (values) => {
-        console.log(values);
         const editData = {
             name: values.name,
             id: item.id,
             imageFile: values.imageFile,
         }
-        console.log(editData);
         const formData = new FormData();
         for (const key in editData) {
             if (editData.hasOwnProperty(key)) {
@@ -64,7 +61,6 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
     setAllLanguages(oldArray => [...oldArray, data])
 
 })
-// .catch(err => console.log(err))
 
         }
 

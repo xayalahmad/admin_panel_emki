@@ -20,9 +20,7 @@ export default function EventsCard({information, setAllEvent, setEventContainer,
   const Token = localStorage.getItem("Token");
   const [get, setGetLang] = useState([]);
   const theme = useTheme();
-  // console.log(event);
 const deleteEvent = (id) => {
-    console.log(id);
     fetch(`http://logicbackend-001-site1.htempurl.com/api/About/${id}`,  {
         method: 'DELETE',
         headers: {

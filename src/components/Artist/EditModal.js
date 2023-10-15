@@ -9,6 +9,8 @@ import styles from './AddArtist.module.css'
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import dayjs from 'dayjs';
+import { ToastContainer, toast } from "react-toastify";
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -32,19 +34,18 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
         },
         onSubmit: values => {
             editLang(values)
-            console.log(values);
         }
     })
 
 
     const editLang = (values) => {
-        console.log(values);
         const editData = {
             name: values.name,
             id: item.id,
             imageFile: values.imageFile,
         }
-        console.log(editData);
+        if(editData.name && editData.id && editData.imageFile){
+
         const formData = new FormData();
         for (const key in editData) {
             if (editData.hasOwnProperty(key)) {
@@ -66,12 +67,20 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
     setAllLanguages(oldArray => [...oldArray, data])
 
 })
-// .catch(err => console.log(err))
+}
+else{
+    toast.error("Şəkil və digər xanaları doldurun", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
 
         }
 
     return (
+
         <div>
+           <ToastContainer />
+
             <EditIcon onClick={handleOpen} className={styles.editicon} />
             <Modal
                 open={open}

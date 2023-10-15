@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../../stores/tokenBoolean";
 import EditIcon from '@mui/icons-material/Edit';
 import Login from "../../Login/Login";
+import { ToastContainer, toast } from "react-toastify";
 
 const style = {
     position: 'absolute',
@@ -100,6 +101,8 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
               formData.append(key, annData[key]);
             }
           }
+    if(annData.title && annData.imageFile && annData.content && annData.languageId && annData.postId ){
+  
     setOpen(false)
 
         fetch('http://logicbackend-001-site1.htempurl.com/api/PostTranslation', {
@@ -119,6 +122,12 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
                 setErr(err)
                 // dispatch(setTokenBoolean(false))
             })
+        }
+        else{
+            toast.error("Şəkil və digər xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
 
 

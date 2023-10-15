@@ -42,7 +42,7 @@ const [err, setErr] = useState('')
   return (
     <div>
       <Box onClick={handleOpen} className={styles.button2}>
-                Dil dəyiş
+                Dil məlumatları
             </Box>
       <Modal
         open={open}

@@ -19,20 +19,8 @@ export default function Login() {
             password: '',
         },
         onSubmit: values => {
-            console.log(values);
             postLogin(values)
            
-            // fetch('http://localhost:88/api/Authorization/Login', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //       },
-            //       body: JSON.stringify(values)
-      
-            // })
-            //     .then(res => res.json())
-            //     .then(data => console.log(data))
-            //     .catch(err => console.log(err))
         }
     })
 
@@ -55,7 +43,6 @@ const postLogin = (values) => {
       return response.json();
     })
     .then(responseData => {
-      console.log(responseData);
       if(responseData.token){
         let x =  new Date( responseData.expiration)
         let expDate = x.toLocaleString()
@@ -69,7 +56,6 @@ const postLogin = (values) => {
     })
     .catch(error => {
       dispatch(setTokenBoolean(false))
-      console.error(error);
     });
   }
   else{

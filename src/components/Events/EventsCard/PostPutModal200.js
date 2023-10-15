@@ -102,7 +102,7 @@ function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announ
               formDataPut.append(key, annData[key]);
             }
           }
-          if(annData.imageFile){
+        if(annData.title && annData.ticketLink && annData.artistName && annData.place && annData.imageFile && annData.description && annData.id && annData.announcementId && annData.languageId){
     setOpen(false)
         fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/${data.id}`, {
             method: 'PUT',

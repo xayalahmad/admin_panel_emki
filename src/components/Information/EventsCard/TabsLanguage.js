@@ -25,11 +25,8 @@ function TabsLanguage({ getlang, setGetLang, information, setOpen, setEventConta
     const handleChange = (information, newValue) => {
         setValue(newValue);
     };
-    console.log(information);
     const getLanguageAnn = useCallback((id) => {
         setChoosenLanguage(id)
-        // console.log(event.id);
-        console.log(choosenLanguage);
     
     })
 
@@ -37,9 +34,7 @@ function TabsLanguage({ getlang, setGetLang, information, setOpen, setEventConta
         fetch(`http://logicbackend-001-site1.htempurl.com/api/About/translation?languageId=${choosenLanguage}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             if (data.imageSrc) {
-                console.log(data);
                 setAnnDataLang(data)
             }
             else {
@@ -49,9 +44,6 @@ function TabsLanguage({ getlang, setGetLang, information, setOpen, setEventConta
         })
         .catch(err => {
             setAnnDataLang(false)
-
-            console.log(err)
-            console.log('catch');
             setAnnDataLang({
                 title: '',
                 artist: '',
@@ -142,6 +134,59 @@ function TabsLanguage({ getlang, setGetLang, information, setOpen, setEventConta
                         ''
                     }
                         {annDataLang.languageId == 10 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                           {annDataLang.languageId == 11 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                        {annDataLang.languageId == 12 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                        {annDataLang.languageId == 13 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                        {annDataLang.languageId == 14 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }              {annDataLang.languageId == 15 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                           {annDataLang.languageId == 16 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                        {annDataLang.languageId == 17 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                        {annDataLang.languageId == 18 ?
+                        <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
+
+                        :
+                        ''
+                    }
+                        {annDataLang.languageId == 19 ?
                         <PostPutModal200 setEventContainer={setEventContainer} setOpen={setOpen} formValues={formValues} setAnnDataLang={setAnnDataLang} announcementId={information.id} annDataLang={annDataLang} choosenLanguage={choosenLanguage} information={information} />
 
                         :

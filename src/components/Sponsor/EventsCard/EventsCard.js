@@ -21,9 +21,7 @@ export default function EventsCard({sponsor, setAllEvent, setEventContainer, eve
   const Token = localStorage.getItem("Token");
   const [get, setGetLang] = useState([]);
   const theme = useTheme();
-  // console.log(event);
 const deleteEvent = (id) => {
-    console.log(id);
     fetch(`http://logicbackend-001-site1.htempurl.com/api/Sponsor/${id}`,  {
         method: 'DELETE',
         headers: {
@@ -35,9 +33,8 @@ const deleteEvent = (id) => {
     // setEventContainer(eventContainer.filter(languages => languages.id != id))
     // setAllLanguages(allLanguages.filter(languages => languages.id != id))
 }
-console.log(sponsor);
   return (
-    <Card sx={{ display: 'flex', alignItems: 'center', position: 'relative',margin: '15px', width: '250px', height: '250px', padding: '10px' }}>
+    <Card sx={{ display: 'flex', alignItems: 'center', position: 'relative',margin: '15px', width: '250px', height: '250px', padding: '10px', backgroundColor: '#a1a1a1' }}>
       <Box className='absolute top-0 flex mt-2'>
 
                <DeleteIcon  onClick={() => deleteEvent(`${sponsor.id}`) }/>

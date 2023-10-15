@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../../stores/tokenBoolean";
 import { DateField } from '@mui/x-date-pickers/DateField';
 import moment from 'moment'
+import { ToastContainer, toast } from "react-toastify";
 
 const style = {
     position: 'absolute',
@@ -45,6 +46,7 @@ function AddEvent({ setEventContainer }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [err, setErr] = useState('');
 
 
     const [announcementId, setAnnouncementId] = useState('')
@@ -82,7 +84,9 @@ function AddEvent({ setEventContainer }) {
                 formData.append(key, annData[key]);
             }
         }
-        console.log(annData);
+        if(annData.imageFile){
+      
+
         setOpen(false)
 
         fetch('http://logicbackend-001-site1.htempurl.com/api/Sponsor', {
@@ -95,14 +99,19 @@ function AddEvent({ setEventContainer }) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 dispatch(setTokenBoolean(true))
                 setEventContainer(oldArray => [...oldArray, data])
             })
             .catch(err => {
-                console.log(err)
-                // dispatch(setTokenBoolean(false))
+                setErr(err)
             })
+        }
+        else{
+            toast.error("Şəkil xanasını doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
+
     })
 
 
@@ -112,6 +121,8 @@ function AddEvent({ setEventContainer }) {
 
     return (
         <>
+           <ToastContainer />
+
             <Box className='flex items-center w-full'>
                 <Box className=''>
                     <Box onClick={handleOpen}>

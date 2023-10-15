@@ -27,6 +27,7 @@ export default function ModalTranslations({sponsor, setEventContainer}) {
   const handleClose = () => setOpen(false);
   const [allLanguages, setAllLanguages] = useState('');
   const [getlang, setGetLang] = useState([]);
+  const [err, setErr] = useState('');
 
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function ModalTranslations({sponsor, setEventContainer}) {
       .then(data => {setGetLang(data)
    }
         )
-        .catch(err => console.log(err))
+        .catch(err => setErr(err))
       }
       getLangFunction()
 }, [allLanguages])

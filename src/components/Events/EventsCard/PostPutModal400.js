@@ -126,7 +126,7 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
             })
         }
         else{
-            toast.error("Bütün xanaları doldurun", {
+            toast.error("Şəkil və digər xanaları doldurun", {
               position: toast.POSITION.TOP_CENTER
             });
           }

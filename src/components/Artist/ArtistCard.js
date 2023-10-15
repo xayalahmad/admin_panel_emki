@@ -12,13 +12,11 @@ import { setTokenBoolean } from "../../stores/tokenBoolean";
 import { useDispatch } from 'react-redux';
 import styles from './AddArtist.module.css'
 export default function ArtistCard({artist, setGetLang, getlang , setAllLanguages, allLanguages, setEventContainer}) {
-    console.log(artist);
     const dispatch = useDispatch()
 
     const Token = localStorage.getItem("Token");
 
     const deleteLang = (id) => {
-      console.log(id);
         fetch(`http://logicbackend-001-site1.htempurl.com/api/Artist/${id}`,  {
             method: 'DELETE',
             headers: {
@@ -38,8 +36,6 @@ export default function ArtistCard({artist, setGetLang, getlang , setAllLanguage
 
         // })
         // setAllLanguages(allLanguages.filter(languages => languages.id != id))
-        console.log(getlang);
-        console.log(id);
     }
   return (
     <Card sx={{ marginBottom: '35px', width: '384px' }}>

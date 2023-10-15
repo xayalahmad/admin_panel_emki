@@ -51,9 +51,9 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
     const [value, setValue] = useState(dayjs('2022-04-17T18:00'));
     const [eventsDate, setEventsDate] = useState('')
     const [getLang, setGetLang] = useState('')
+    const [err, setErr] = useState('');
     const [langAnn, setLangAnn] = useState('');
     const [inputVal, setInputVal] = useState('');
-    // console.log(annDataLang);
     let ObjAnnDataLang = {}
     // if(annDataLang.imageSrc){
         ObjAnnDataLang = {
@@ -65,19 +65,7 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
             id: information.id 
         }
 
-    // }else{
-        // console.log('FALSE');
-        // ObjAnnDataLang = {
-        //     title: '',
-        //     artist: '',
-        //     desc: '',
-        //     hall: '',
-        //     link: '',
-        //     id: event.id 
-        // }
-    // }
-console.log('400');
-    const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
+        const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
         initialValues: {
             title: '',
             content: '',
@@ -97,58 +85,8 @@ console.log('400');
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
             .then(res => res.json())
             .then(data => setGetLang(data))
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [])
-
-    // http://logicbackend-001-site1.htempurl.com/
-    // POST
-    // Yeni elan yaratmaq
-    
-    // const putTrans = useCallback((data, id) => {
-    //     console.log(data);
-    //     console.log(id);
-    //     console.log(announcementId);
-    //     const annData = {
-    //         title: data.title,
-    //         ticketLink: data.link,
-    //         artistName: data.artist,
-    //         place: data.hall,
-    //         imageFile: data.imageFile,
-    //         description: data.desc,
-    //         announcementId: announcementId,
-    //         languageId: choosenLanguage,
-    //         // id: id
-    //     }
-    //     const formDataPut = new FormData();
-    //     for (const key in annData) {
-    //         if (annData.hasOwnProperty(key)) {
-    //           formDataPut.append(key, annData[key]);
-    //         }
-    //       }
-    // console.log(annData);
-    // // setOpen(false)
-    //     fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/${event.id}`, {
-    //         method: 'PUT',
-    //         body: formDataPut,
-    //         headers: {
-    //             // "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${Token}`
-    //         }
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {console.log(data)
-    //             dispatch(setTokenBoolean(true))
-    //             // setEventContainer(oldArray => [...oldArray, data])
-
-
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //             // dispatch(setTokenBoolean(false))
-    //         })
-    // })
-
-
 
 
     const postTrans = useCallback((data) => {
@@ -158,16 +96,14 @@ console.log('400');
             imageFile: data.imageFile,
             languageId: choosenLanguage,
         }
-        console.log(annData);
         const formData = new FormData();
         for (const key in annData) {
             if (annData.hasOwnProperty(key)) {
               formData.append(key, annData[key]);
             }
           }
-    console.log(annData);
 
-    if(annData.imageFile){
+    if(annData.imageFile && annData.title && annData.content && annData.languageId){
     setOpen(false)
         fetch('http://logicbackend-001-site1.htempurl.com/api/About', {
             method: 'POST',
@@ -178,13 +114,11 @@ console.log('400');
             }
         })
             .then(res => res.json())
-            .then(data => {console.log(data)
+            .then(data => {
                 dispatch(setTokenBoolean(true))
-                // setEventContainer(oldArray => [...oldArray, data])
             })
             .catch(err => {
-                console.log(err)
-                // dispatch(setTokenBoolean(false))
+                dispatch(setTokenBoolean(true))
             })
         }
         else{

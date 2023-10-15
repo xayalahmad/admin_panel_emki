@@ -27,8 +27,6 @@ function TabsLanguage({ getlang, setGetLang, sponsor, setOpen, setEventContainer
     };
     const getLanguageAnn = useCallback((id) => {
         setChoosenLanguage(id)
-        // console.log(sponsor.id);
-        // console.log(id);
         fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/translationByLanguageId?announcementId=${sponsor.id}&languageId=${id}`)
             .then(res => res.json())
             .then(data => {
@@ -42,8 +40,6 @@ function TabsLanguage({ getlang, setGetLang, sponsor, setOpen, setEventContainer
                 }
             })
             .catch(err => {
-                console.log(err)
-                console.log('catch');
                 setAnnDataLang({
                     title: '',
                     artist: '',
@@ -56,7 +52,6 @@ function TabsLanguage({ getlang, setGetLang, sponsor, setOpen, setEventContainer
             })
     })
 
-console.log(sponsor);
     return (
         <Box>
 
@@ -65,10 +60,10 @@ console.log(sponsor);
                     <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '10px' }}>
                         {/* <TabList onChange={handleChange} aria-label="lab API tabs example"> */}
                         <Box className='flex justify-between'>
-                        {getlang.map((q, i) =>
+                        {/* {getlang.map((q, i) =>
                                 <p key={i} className='p-5' onClick={() => getLanguageAnn(q.id)}>{q.code}</p>
                             // <Tab onClick={() => getLanguageAnn(q.id)} label={q.code} value={q.id} />
-                        )}
+                        )} */}
                             </Box>
                         {/* <Tab label="Item Two" value="2" /> */}
                         {/* <Tab label="Item Three" value="3" /> */}

@@ -41,11 +41,11 @@ const style = {
 function AnnModal({ event, setEventContainer }) {
     const dispatch = useDispatch()
     const { tokenBoolean } = useSelector(state => state.tokenBoolean)
-    // console.log(event);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const [err, setErr] = useState('');
 
     const [announcementId, setAnnouncementId] = useState('')
     const Token = localStorage.getItem("Token");
@@ -73,9 +73,8 @@ function AnnModal({ event, setEventContainer }) {
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
             .then(res => res.json())
             .then(data => {setGetLang(data)
-            console.log(data);
             })
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [])
 
     // http://logicbackend-001-site1.htempurl.com/
@@ -101,7 +100,6 @@ function AnnModal({ event, setEventContainer }) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setAnnouncementId(data.id)
                 // postTrans(dataVal, data.id)
                 dispatch(setTokenBoolean(true))
@@ -110,7 +108,6 @@ function AnnModal({ event, setEventContainer }) {
 
             })
             .catch(err => {
-                console.log(err)
                 dispatch(setTokenBoolean(false))
             })
         }
@@ -193,28 +190,7 @@ function AnnModal({ event, setEventContainer }) {
                                             }
                                         }}
                                         label="Saat" variant="filled" />
-                                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['TimePicker', 'TimePicker']}>
-        <TimePicker
-          label="Controlled picker"
-          value={value}
-          ampm={false}
-        //   onChange={(newValue) => setValue(newValue)}
-        //   onChange={time => setFieldValue('time', `${time.time.$H} ${time.time.$M}`)}
-          onChange={time => console.log(time)}
-        />
-      </DemoContainer>
-    </LocalizationProvider> */}
-
-                                    {/* <DatePicker 
-                      selected={values.startDate}
-                    //   dateFormat="MMMM d, yyyy"
-                    // timeFormat=""
-                    timeFormat=  "HH:mm"
-                      className="form-control"
-                      name="startDate"
-                      onChange={date => setFieldValue('startDate', date)}
-                    /> */}
+                      
                                 </Box>
                             </Box>
 

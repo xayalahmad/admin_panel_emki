@@ -41,8 +41,8 @@ const style = {
 function AnnModal({ information, setEventContainer }) {
     const dispatch = useDispatch()
     const { tokenBoolean } = useSelector(state => state.tokenBoolean)
-    // console.log(event);
     const [open, setOpen] = useState(false);
+    const [err, setErr] = useState('');
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -74,9 +74,8 @@ function AnnModal({ information, setEventContainer }) {
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
             .then(res => res.json())
             .then(data => {setGetLang(data)
-            console.log(data);
             })
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [])
 
     // http://logicbackend-001-site1.htempurl.com/
@@ -102,7 +101,6 @@ function AnnModal({ information, setEventContainer }) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setAnnouncementId(data.id)
                 // postTrans(dataVal, data.id)
                 dispatch(setTokenBoolean(true))
@@ -111,7 +109,6 @@ function AnnModal({ information, setEventContainer }) {
 
             })
             .catch(err => {
-                console.log(err)
                 dispatch(setTokenBoolean(false))
             })
         }
@@ -129,7 +126,7 @@ function AnnModal({ information, setEventContainer }) {
 
     return (
         <>
-           <ToastContainer />
+           {/* <ToastContainer /> */}
             <Box className='flex items-center w-full'>
                 {/* <Box> */}
                 <Box onClick={handleOpen} className={styles.button1}>
@@ -194,28 +191,7 @@ function AnnModal({ information, setEventContainer }) {
                                             }
                                         }}
                                         label="Saat" variant="filled" />
-                                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['TimePicker', 'TimePicker']}>
-        <TimePicker
-          label="Controlled picker"
-          value={value}
-          ampm={false}
-        //   onChange={(newValue) => setValue(newValue)}
-        //   onChange={time => setFieldValue('time', `${time.time.$H} ${time.time.$M}`)}
-          onChange={time => console.log(time)}
-        />
-      </DemoContainer>
-    </LocalizationProvider> */}
-
-                                    {/* <DatePicker 
-                      selected={values.startDate}
-                    //   dateFormat="MMMM d, yyyy"
-                    // timeFormat=""
-                    timeFormat=  "HH:mm"
-                      className="form-control"
-                      name="startDate"
-                      onChange={date => setFieldValue('startDate', date)}
-                    /> */}
+     
                                 </Box>
                             </Box>
 

@@ -52,8 +52,8 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
     const [eventsDate, setEventsDate] = useState('')
     const [getLang, setGetLang] = useState('')
     const [langAnn, setLangAnn] = useState('');
+    const [err, setErr] = useState('');
     const [inputVal, setInputVal] = useState('');
-    // console.log(annDataLang);
     let ObjAnnDataLang = {}
     // if(annDataLang.imageSrc){
         ObjAnnDataLang = {
@@ -65,17 +65,6 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
             id: sponsor.id 
         }
 
-    // }else{
-        // console.log('FALSE');
-        // ObjAnnDataLang = {
-        //     title: '',
-        //     artist: '',
-        //     desc: '',
-        //     hall: '',
-        //     link: '',
-        //     id: event.id 
-        // }
-    // }
 
     const { handleSubmit, handleChange, values, setFieldValue } = useFormik({
         initialValues: {
@@ -97,57 +86,8 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
         fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
             .then(res => res.json())
             .then(data => setGetLang(data))
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [])
-
-    // http://logicbackend-001-site1.htempurl.com/
-    // POST
-    // Yeni elan yaratmaq
-    
-    // const putTrans = useCallback((data, id) => {
-    //     console.log(data);
-    //     console.log(id);
-    //     console.log(announcementId);
-    //     const annData = {
-    //         title: data.title,
-    //         ticketLink: data.link,
-    //         artistName: data.artist,
-    //         place: data.hall,
-    //         imageFile: data.imageFile,
-    //         description: data.desc,
-    //         announcementId: announcementId,
-    //         languageId: choosenLanguage,
-    //         // id: id
-    //     }
-    //     const formDataPut = new FormData();
-    //     for (const key in annData) {
-    //         if (annData.hasOwnProperty(key)) {
-    //           formDataPut.append(key, annData[key]);
-    //         }
-    //       }
-    // console.log(annData);
-    // // setOpen(false)
-    //     fetch(`http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation/${event.id}`, {
-    //         method: 'PUT',
-    //         body: formDataPut,
-    //         headers: {
-    //             // "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${Token}`
-    //         }
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {console.log(data)
-    //             dispatch(setTokenBoolean(true))
-    //             // setEventContainer(oldArray => [...oldArray, data])
-
-
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //             // dispatch(setTokenBoolean(false))
-    //         })
-    // })
-
 
 
 
@@ -163,15 +103,12 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
             announcementId: announcementId,
             languageId: choosenLanguage,
         }
-        console.log(annData);
         const formData = new FormData();
         for (const key in annData) {
             if (annData.hasOwnProperty(key)) {
               formData.append(key, annData[key]);
             }
           }
-        console.log(formData.get('place'));
-    console.log(annData);
 
     if(annData.title && annData.ticketLink && annData.artistName && annData.imageFile && annData.description && annData.place ){
     setOpen(false)
@@ -184,13 +121,11 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
             }
         })
             .then(res => res.json())
-            .then(data => {console.log(data)
+            .then(data => {
                 dispatch(setTokenBoolean(true))
-                // setEventContainer(oldArray => [...oldArray, data])
             })
             .catch(err => {
-                console.log(err)
-                // dispatch(setTokenBoolean(false))
+                setErr(err)
             })
         }
         else{

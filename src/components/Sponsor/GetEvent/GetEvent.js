@@ -5,6 +5,7 @@ import styles from '../EventsCard/EventsCard.module.css'
 export default function GetEvent({eventContainer, setEventContainer }){
     const [allEvent, setAllEvent] = useState('');
     const [getEvent, setGetEvent] = useState([]);
+    const [err, setErr] = useState('');
 
 
     // GET
@@ -13,10 +14,9 @@ export default function GetEvent({eventContainer, setEventContainer }){
         fetch('http://logicbackend-001-site1.htempurl.com/api/Sponsor')
             .then(res => res.json())
             .then(data => {setGetEvent(data)
-                // console.log(data)
             }
             )
-            .catch(err => console.log(err))
+            .catch(err => setErr(err))
     }, [eventContainer])
 
 

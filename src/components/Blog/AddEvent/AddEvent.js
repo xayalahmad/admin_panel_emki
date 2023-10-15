@@ -20,6 +20,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { setTokenBoolean } from "../../../stores/tokenBoolean";
+import { ToastContainer, toast } from "react-toastify";
 
 const style = {
     position: 'absolute',
@@ -91,6 +92,8 @@ function AddEvent({setEventContainer}) {
         const annData = {
             date: dataVal.date,
         }
+        if(annData.date){
+    
         fetch('http://logicbackend-001-site1.htempurl.com/api/Post', {
             method: 'POST',
             body: JSON.stringify(annData),
@@ -109,6 +112,12 @@ function AddEvent({setEventContainer}) {
             .catch(err => {
                 dispatch(setTokenBoolean(true))
             })
+        }
+        else{
+            toast.error("Şəkil və digər xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
 
 
@@ -128,8 +137,11 @@ function AddEvent({setEventContainer}) {
               formData.append(key, annData[key]);
             }
           }
-    setOpen(false)
+        if(annData.title && annData.content && annData.imageFile && annData.postId  && annData.languageId){
 
+      
+
+    setOpen(false)
         fetch('http://logicbackend-001-site1.htempurl.com/api/PostTranslation', {
             method: 'POST',
             body: formData,
@@ -147,6 +159,12 @@ function AddEvent({setEventContainer}) {
                 setErr(err)
                 // dispatch(setTokenBoolean(false))
             })
+        }
+        else{
+            toast.error("Şəkil və digər xanaları doldurun", {
+              position: toast.POSITION.TOP_CENTER
+            });
+          }
     })
 
 
@@ -156,6 +174,8 @@ function AddEvent({setEventContainer}) {
 
     return (
         <>
+           <ToastContainer />
+
             <Box className='flex items-center w-full'>
                 <Box className=''>
                     <Box onClick={handleOpen}>
@@ -265,8 +285,8 @@ function AddEvent({setEventContainer}) {
                                                 setFieldValue("lang", event.target.value);
                                             }}
                                         >
-                                            {Object.entries(langAnn).map(q => {
-                                                return (<MenuItem value={q[1].id} id={q[1].id} key={q[1].code}>
+                                            {Object.entries(langAnn).map((q, i) => {
+                                                return (<MenuItem value={q[1].id} id={q[1].id} key={i}>
                                                     {q[1].title}
                                                 </MenuItem>)
                                             })}

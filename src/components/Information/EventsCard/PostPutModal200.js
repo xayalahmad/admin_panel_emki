@@ -41,7 +41,6 @@ const style = {
 function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announcementId, setEventContainer, eventContainer, choosenLanguage, information}) {
     const dispatch = useDispatch()
     const { tokenBoolean } = useSelector(state => state.tokenBoolean)
-console.log(information);
     // const [open, setOpen] = useState(false);
     // const handleOpen = () => setOpen(true);
     // const handleClose = () => setOpen(false);
@@ -53,12 +52,7 @@ console.log(information);
     const [getLang, setGetLang] = useState('')
     const [langAnn, setLangAnn] = useState('');
     const [inputVal, setInputVal] = useState('');
-    console.log(annDataLang);
 
-    // }else{
-        // console.log('FALSE');
-        // }
-  console.log('200');
     const { handleSubmit, handleChange, values, setFieldValue,  resetForm } = useFormik({
         initialValues: {
             title: annDataLang.title,
@@ -72,21 +66,8 @@ console.log(information);
 
         }
     })
-    // GET
-    // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
-    // useEffect(() => {
-    //     fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
-    //         .then(res => res.json())
-    //         .then(data => setGetLang(data))
-    //         .catch(err => console.log(err))
-    // }, [])
-
-    // http://logicbackend-001-site1.htempurl.com/
-    // POST
-    // Yeni elan yaratmaq
 
     const putTrans = useCallback((data, id) => {
-      console.log(data);
         const annData = {
             title: data.title,
             content: data.content,
@@ -94,7 +75,6 @@ console.log(information);
             languageId: choosenLanguage,
             id: data.id
         }
-        console.log(annData);
         const formDataPut = new FormData();
         for (const key in annData) {
             if (annData.hasOwnProperty(key)) {
@@ -102,8 +82,7 @@ console.log(information);
             }
           }
         //   if(annData.imageFile){
-    console.log(annData);
-    if(annData.imageFile){
+    if(annData.imageFile && annData.title && annData.content && annData.languageId && annData.id){
         setOpen(false)
         fetch(`http://logicbackend-001-site1.htempurl.com/api/About/${data.id}`, {
             method: 'PUT',
@@ -114,15 +93,11 @@ console.log(information);
             }
         })
             .then(res => res.json())
-            .then(data => {console.log(data)
-                dispatch(setTokenBoolean(true))
+            .then(data => {
                 setEventContainer(oldArray => [...oldArray, data])
-
-
             })
             .catch(err => {
-                console.log(err)
-                // dispatch(setTokenBoolean(false))
+                dispatch(setTokenBoolean(true))
             })
         // }
 
@@ -140,7 +115,7 @@ console.log(information);
 
     return (
         <>
-           <ToastContainer />
+           {/* <ToastContainer /> */}
 
             <Box className='flex items-center w-full'>
                 <Box className='w-full'>

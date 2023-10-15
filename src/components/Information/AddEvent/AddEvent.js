@@ -64,6 +64,7 @@ function AddEvent({ setEventContainer }) {
             setInputVal(values)
             postTrans(values)
 
+            // <PostRequest data={values}/>
         }
     })
     // GET
@@ -77,8 +78,7 @@ function AddEvent({ setEventContainer }) {
                 dispatch(setTokenBoolean(true))
             })
             .catch(err => {
-                console.log(err)
-                dispatch(setTokenBoolean(false))
+                dispatch(setTokenBoolean(true))
             })
     }, [])
     
@@ -100,7 +100,6 @@ function AddEvent({ setEventContainer }) {
                 formData.append(key, annData[key]);
             }
         }
-        console.log(annData);
     if(annData.imageFile && annData.content && annData.title && annData.languageId){
   
         setOpen(false)
@@ -115,13 +114,11 @@ function AddEvent({ setEventContainer }) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 dispatch(setTokenBoolean(true))
                 setEventContainer(oldArray => [...oldArray, data])
             })
             .catch(err => {
-                console.log(err)
-                // dispatch(setTokenBoolean(false))
+                dispatch(setTokenBoolean(true))
             })
         }
         else{
