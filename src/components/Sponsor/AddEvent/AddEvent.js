@@ -89,7 +89,7 @@ function AddEvent({ setEventContainer }) {
 
         setOpen(false)
 
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Sponsor', {
+        fetch('https://emkiproduction.azurewebsites.net/api/Sponsor', {
             method: 'POST',
             body: formData,
             headers: {

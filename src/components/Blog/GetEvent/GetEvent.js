@@ -11,7 +11,7 @@ export default function GetEvent({eventContainer, setEventContainer }){
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
     useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Post')
+        fetch('https://emkiproduction.azurewebsites.net/api/Post')
             .then(res => res.json())
             .then(data => {setGetEvent(data.reverse())
             }

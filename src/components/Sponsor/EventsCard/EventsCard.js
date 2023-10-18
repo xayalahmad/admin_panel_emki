@@ -22,7 +22,7 @@ export default function EventsCard({sponsor, setAllEvent, setEventContainer, eve
   const [get, setGetLang] = useState([]);
   const theme = useTheme();
 const deleteEvent = (id) => {
-    fetch(`http://logicbackend-001-site1.htempurl.com/api/Sponsor/${id}`,  {
+    fetch(`https://emkiproduction.azurewebsites.net/api/Sponsor/${id}`,  {
         method: 'DELETE',
         headers: {
             'Content-type': 'application/json',

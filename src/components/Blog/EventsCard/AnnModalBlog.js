@@ -77,7 +77,7 @@ function AnnModal({event, setEventContainer}) {
     }
   if(annData.date && annData.id){       
     setOpen(false)
-    fetch(`http://logicbackend-001-site1.htempurl.com/api/Post/${event.id}`, {
+    fetch(`https://emkiproduction.azurewebsites.net/api/Post/${event.id}`, {
         method: 'PUT',
         body: JSON.stringify(annData),
         headers: {

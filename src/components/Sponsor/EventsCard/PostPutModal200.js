@@ -79,7 +79,7 @@ function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announ
           }
           if(values.imageFile){
     setOpen(false)
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/Sponsor/${data.id}`, {
+        fetch(`https://emkiproduction.azurewebsites.net/api/Sponsor/${data.id}`, {
             method: 'PATCH',
             body: formDataPut,
             headers: {

@@ -28,7 +28,7 @@ function TabsLanguage({ getlang, setEventContainer, setGetLang, event, setOpen }
     };
     const getLanguageAnn = useCallback((id) => {
         setChoosenLanguage(id)
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/PostTranslation?postId=${event.id}&languageId=${id}`)
+        fetch(`https://emkiproduction.azurewebsites.net/api/PostTranslation?postId=${event.id}&languageId=${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.imageSrc) {

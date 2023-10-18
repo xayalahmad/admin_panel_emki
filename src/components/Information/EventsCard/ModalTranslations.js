@@ -31,7 +31,7 @@ export default function ModalTranslations({information, setEventContainer}) {
 
   useEffect(() => {
     async function getLangFunction(){
-      await fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+      await fetch('https://emkiproduction.azurewebsites.net/api/Language')
       .then(res => res.json())
       .then(data => {setGetLang(data)
    }

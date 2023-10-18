@@ -44,7 +44,7 @@ else{
         refreshToken: refreshToken,
     }
     // console.log(annData);
-    fetch('http://logicbackend-001-site1.htempurl.com/api/Token/Refresh', {
+    fetch('https://emkiproduction.azurewebsites.net/api/Token/Refresh', {
         method: 'POST',
         body: JSON.stringify(annData),
         headers: {
@@ -74,7 +74,7 @@ if(Date.parse(now) <  Date.parse(dateRefresh)){
 else{
     // console.log('logine get');
 
-    fetch('http://logicbackend-001-site1.htempurl.com/api/Token/Revoke', {
+    fetch('https://emkiproduction.azurewebsites.net/api/Token/Revoke', {
         method: 'POST',
         // body: JSON.stringify(annData),
         headers: {

@@ -48,7 +48,7 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
         if(values.title && values.code){
             
 
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/Language/${item.id}`,  {
+        fetch(`https://emkiproduction.azurewebsites.net/api/Language/${item.id}`,  {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
@@ -62,7 +62,7 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
 
 })
         setOpen(false)
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+        fetch('https://emkiproduction.azurewebsites.net/api/Language')
         .then(res => res.json())
         .then(data => setGetLang(data))
         .catch(err => setErr(err))

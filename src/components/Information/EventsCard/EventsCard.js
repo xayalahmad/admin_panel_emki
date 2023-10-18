@@ -21,7 +21,7 @@ export default function EventsCard({information, setAllEvent, setEventContainer,
   const [get, setGetLang] = useState([]);
   const theme = useTheme();
 const deleteEvent = (id) => {
-    fetch(`http://logicbackend-001-site1.htempurl.com/api/About/${id}`,  {
+    fetch(`https://emkiproduction.azurewebsites.net/api/About/${id}`,  {
         method: 'DELETE',
         headers: {
             'Content-type': 'application/json',

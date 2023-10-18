@@ -29,7 +29,7 @@ export default function Login() {
 // useEffect(() => {
   //  
 const postLogin = (values) => {
-  const url = "http://logicbackend-001-site1.htempurl.com/api/Authorization/Login";
+  const url = "https://emkiproduction.azurewebsites.net/api/Authorization/Login";
   if(values.username && values.password){
   fetch(url, {
     method: 'POST',

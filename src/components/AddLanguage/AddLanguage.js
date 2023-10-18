@@ -31,7 +31,7 @@ function AddEvent() {
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
     useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+        fetch('https://emkiproduction.azurewebsites.net/api/Language')
             .then(res => res.json())
             .then(data => setGetLang(data))
             .catch(err => setErr(err))
@@ -45,7 +45,7 @@ function AddEvent() {
     const postLang = useCallback((values) => {
   if(values.title && values.code){
 
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language', {
+        fetch('https://emkiproduction.azurewebsites.net/api/Language', {
             method: 'POST',
             body: JSON.stringify(values),
             headers: {
@@ -66,7 +66,7 @@ function AddEvent() {
     })
     
     const deleteLang = (id) => {
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/Language/${id}`,  {
+        fetch(`https://emkiproduction.azurewebsites.net/api/Language/${id}`,  {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',

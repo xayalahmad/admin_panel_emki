@@ -31,7 +31,7 @@ function AddArtist({setEventContainer}) {
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
     useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Artist')
+        fetch('https://emkiproduction.azurewebsites.net/api/Artist')
             .then(res => res.json())
             .then(data => {setGetLang(data)
             })
@@ -56,7 +56,7 @@ function AddArtist({setEventContainer}) {
               formData.append(key, annData[key]);
             }
           }
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Artist', {
+        fetch('https://emkiproduction.azurewebsites.net/api/Artist', {
             method: 'POST',
             body: formData,
             headers: {
@@ -77,7 +77,7 @@ function AddArtist({setEventContainer}) {
           }
     })
     const deleteLang = (id) => {
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/Artist/${id}`,  {
+        fetch(`https://emkiproduction.azurewebsites.net/api/Artist/${id}`,  {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',

@@ -48,7 +48,7 @@ export default function EditModal({item, allLanguages, setAllLanguages, setGetLa
               formData.append(key, editData[key]);
             }
           }
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/Artist/${item.id}`,  {
+        fetch(`https://emkiproduction.azurewebsites.net/api/Artist/${item.id}`,  {
             method: 'PUT',
             body: formData,
             headers: {

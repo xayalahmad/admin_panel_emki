@@ -71,7 +71,7 @@ function AnnModal({ information, setEventContainer }) {
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
     useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+        fetch('https://emkiproduction.azurewebsites.net/api/Language')
             .then(res => res.json())
             .then(data => {setGetLang(data)
             })
@@ -91,7 +91,7 @@ function AnnModal({ information, setEventContainer }) {
         
   if(true){       
     setOpen(false)
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/Announcement/${information.id}`, {
+        fetch(`https://emkiproduction.azurewebsites.net/api/Announcement/${information.id}`, {
             method: 'PUT',
             body: JSON.stringify(annData),
             headers: {

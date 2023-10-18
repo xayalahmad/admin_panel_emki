@@ -83,7 +83,7 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
     useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+        fetch('https://emkiproduction.azurewebsites.net/api/Language')
             .then(res => res.json())
             .then(data => setGetLang(data))
             .catch(err => setErr(err))
@@ -112,7 +112,7 @@ function PostPutModal({ setOpen, artistName, id, announcementId, setEventContain
 
     if(annData.title && annData.ticketLink && annData.artistName && annData.imageFile && annData.description && annData.place ){
     setOpen(false)
-        fetch('http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation', {
+        fetch('https://emkiproduction.azurewebsites.net/api/AnnouncementTranslation', {
             method: 'POST',
             body: formData,
             headers: {

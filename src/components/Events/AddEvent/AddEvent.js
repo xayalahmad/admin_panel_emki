@@ -75,7 +75,7 @@ function AddEvent({ setEventContainer }) {
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
     useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+        fetch('https://emkiproduction.azurewebsites.net/api/Language')
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
@@ -99,7 +99,7 @@ function AddEvent({ setEventContainer }) {
         if(annData.minPrice && annData.maxPrice && annData.date && annData.hours){
 
       
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Announcement', {
+        fetch('https://emkiproduction.azurewebsites.net/api/Announcement', {
             method: 'POST',
             body: JSON.stringify(annData),
             headers: {
@@ -155,7 +155,7 @@ function AddEvent({ setEventContainer }) {
 
         setOpen(false)
 
-        fetch('http://logicbackend-001-site1.htempurl.com/api/AnnouncementTranslation', {
+        fetch('https://emkiproduction.azurewebsites.net/api/AnnouncementTranslation', {
             method: 'POST',
             body: formData,
             headers: {

@@ -88,7 +88,7 @@ function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announ
         if(annData.title && annData.imageFile && annData.content && annData.postId && annData.languageId && annData.id){
         
     setOpen(false)
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/PostTranslation/${data.id}`, {
+        fetch(`https://emkiproduction.azurewebsites.net/api/PostTranslation/${data.id}`, {
             method: 'PUT',
             body: formDataPut,
             headers: {

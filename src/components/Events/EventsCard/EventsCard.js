@@ -23,7 +23,7 @@ export default function EventsCard({event, setAllEvent, setEventContainer, event
   // console.log(event);
 const deleteEvent = (id) => {
     console.log(id);
-    fetch(`http://logicbackend-001-site1.htempurl.com/api/Announcement/${id}`,  {
+    fetch(`https://emkiproduction.azurewebsites.net/api/Announcement/${id}`,  {
         method: 'DELETE',
         headers: {
             'Content-type': 'application/json',

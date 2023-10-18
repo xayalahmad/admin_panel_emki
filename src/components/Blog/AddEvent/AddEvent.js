@@ -75,7 +75,7 @@ function AddEvent({setEventContainer}) {
     // GET
     // səhifə ilk açılanda get edib dilləri dropdown a gətirmək
     useEffect(() => {
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Language')
+        fetch('https://emkiproduction.azurewebsites.net/api/Language')
             .then(res => res.json())
             .then(data => {
                 setLangAnn(data)
@@ -94,7 +94,7 @@ function AddEvent({setEventContainer}) {
         }
         if(annData.date){
     
-        fetch('http://logicbackend-001-site1.htempurl.com/api/Post', {
+        fetch('https://emkiproduction.azurewebsites.net/api/Post', {
             method: 'POST',
             body: JSON.stringify(annData),
             headers: {
@@ -142,7 +142,7 @@ function AddEvent({setEventContainer}) {
       
 
     setOpen(false)
-        fetch('http://logicbackend-001-site1.htempurl.com/api/PostTranslation', {
+        fetch('https://emkiproduction.azurewebsites.net/api/PostTranslation', {
             method: 'POST',
             body: formData,
             headers: {

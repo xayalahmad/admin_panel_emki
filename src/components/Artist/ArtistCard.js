@@ -17,7 +17,7 @@ export default function ArtistCard({artist, setGetLang, getlang , setAllLanguage
     const Token = localStorage.getItem("Token");
 
     const deleteLang = (id) => {
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/Artist/${id}`,  {
+        fetch(`https://emkiproduction.azurewebsites.net/api/Artist/${id}`,  {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',

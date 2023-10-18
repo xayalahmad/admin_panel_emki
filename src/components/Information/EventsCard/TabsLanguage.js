@@ -31,7 +31,7 @@ function TabsLanguage({ getlang, setGetLang, information, setOpen, setEventConta
     })
 
     useEffect(() => {
-        fetch(`http://logicbackend-001-site1.htempurl.com/api/About/translation?languageId=${choosenLanguage}`)
+        fetch(`https://emkiproduction.azurewebsites.net/api/About/translation?languageId=${choosenLanguage}`)
         .then(res => res.json())
         .then(data => {
             if (data.imageSrc) {
