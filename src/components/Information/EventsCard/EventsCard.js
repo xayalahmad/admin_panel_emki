@@ -46,7 +46,7 @@ const deleteEvent = (id) => {
                <DeleteIcon onClick={() => deleteEvent(`${information.id}`) }/>
           </Box>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-          {information?.content}  
+          {information?.content?.split("").slice(0, 550).join('')}...
           </Typography>
   
           </Box>

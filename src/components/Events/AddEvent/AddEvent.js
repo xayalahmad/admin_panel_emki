@@ -48,6 +48,7 @@ function AddEvent({ setEventContainer }) {
     const handleClose = () => setOpen(false);
 
 
+    const [err, setErr] = useState('')
     const [announcementId, setAnnouncementId] = useState('')
     const Token = localStorage.getItem("Token");
     const [value, setValue] = useState(dayjs('2023-01-01T18:00'));
@@ -83,7 +84,7 @@ function AddEvent({ setEventContainer }) {
                 dispatch(setTokenBoolean(true))
             })
             .catch(err => {
-                console.log(err)
+                setErr(err)
             })
     }, [])
     // http://logicbackend-001-site1.htempurl.com/
@@ -116,7 +117,7 @@ function AddEvent({ setEventContainer }) {
 
             })
             .catch(err => {
-                console.log(err)
+                setErr(err)
             })
         }
         else{
@@ -147,8 +148,6 @@ function AddEvent({ setEventContainer }) {
                 formData.append(key, annData[key]);
             }
         }
-        console.log(formData.get('place'));
-        console.log(annData);
 
         if(annData.title && annData.imageName && annData.ticketLink && annData.artistName && annData.place && annData.imageFile && annData.description && annData.announcementId && annData.languageId){
 
@@ -165,7 +164,6 @@ function AddEvent({ setEventContainer }) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 dispatch(setTokenBoolean(true))
                 setEventContainer(oldArray => [...oldArray, data])
             })

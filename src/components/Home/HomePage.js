@@ -26,15 +26,16 @@ const [err, setErr] = useState('')
 const now = new Date(thisTime);
 const dateRefresh= new Date(refreshTokenExpiration);
 const dateAccess = new Date(accessTokenExpiration);
-// console.log(now);
-// console.log(dateAccess);
+console.log(now);
+console.log(dateAccess);
+// console.log(Date.parse(dateAccess));
 // console.log(dateRefresh);
 
 // console.log('acccess' , Token);
 // console.log('refresh' , refreshToken);
 // useEffect(() => {
 
-if(Date.parse(now) <  Date.parse(dateAccess)){
+if(now < dateAccess){
     // console.log('qaydasindadi');
 }
 else{
@@ -43,7 +44,6 @@ else{
         accessToken: Token,
         refreshToken: refreshToken,
     }
-    // console.log(annData);
     fetch('https://emkiproduction.azurewebsites.net/api/Token/Refresh', {
         method: 'POST',
         body: JSON.stringify(annData),
@@ -54,11 +54,13 @@ else{
     })
         .then(res => res.json())
         .then(data => {
+            console.log(data);
         localStorage.setItem("Token", data.accessToken);
         localStorage.setItem("rToken",data.refreshToken);
         
     })
         .catch(err => {
+            console.log(err);
             setErr(err)
         })
 
@@ -89,6 +91,8 @@ else{
 
         })
         .catch(err => {
+            console.log(err);
+
             dispatch(setTokenBoolean(false))
             setErr(err)
 
@@ -109,11 +113,8 @@ else{
 
 
 return (
-    <Box className='flex items-center justify-center w-full'>
-        <Box  className={styles.title}>
-    Emki Production Admin Panel
-        </Box>
-    </Box>
+    <>
+        </>
 
 )
 

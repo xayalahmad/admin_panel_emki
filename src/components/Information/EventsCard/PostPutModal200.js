@@ -50,6 +50,7 @@ function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announ
     const [value, setValue] = useState(dayjs('2022-04-17T18:00'));
     const [eventsDate, setEventsDate] = useState('')
     const [getLang, setGetLang] = useState('')
+    const [err, setErr] = useState('')
     const [langAnn, setLangAnn] = useState('');
     const [inputVal, setInputVal] = useState('');
 
@@ -97,7 +98,8 @@ function PostPutModal({ setOpen, formValues, annDataLang, artistName, id, announ
                 setEventContainer(oldArray => [...oldArray, data])
             })
             .catch(err => {
-                dispatch(setTokenBoolean(true))
+                // dispatch(setTokenBoolean(false))
+                setErr(err)
             })
         // }
 
