@@ -33,38 +33,31 @@ console.log(dateAccess);
 
 // console.log('acccess' , Token);
 // console.log('refresh' , refreshToken);
-// useEffect(() => {
+useEffect(() => {
 
-if(now < dateAccess){
-    // console.log('qaydasindadi');
-}
-else{
-    // console.log('logine get');
-    const annData = {
-        accessToken: Token,
-        refreshToken: refreshToken,
+
+    if(Date.parse(now) <  Date.parse(dateAccess)){
+        // console.log('qaydasindadi');
     }
-    fetch('https://emkiproduction.azurewebsites.net/api/Token/Refresh', {
-        method: 'POST',
-        body: JSON.stringify(annData),
-        headers: {
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + Token
-        }
-    })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-        localStorage.setItem("Token", data.accessToken);
-        localStorage.setItem("rToken",data.refreshToken);
-        
-    })
-        .catch(err => {
-            console.log(err);
-            setErr(err)
+    else{
+        // console.log('logine get');
+    
+        fetch('https://emkiproduction.azurewebsites.net/api/Token/Revoke', {
+            method: 'POST',
+            // body: JSON.stringify(annData),
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + Token
+            }
         })
-
-}
+            .then(res => res.json())
+            .then(data => {
+                dispatch(setTokenBoolean(false))
+            })
+            .catch(err => {
+                dispatch(setTokenBoolean(false))
+            })
+    }
 
 
 
@@ -86,30 +79,13 @@ else{
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             dispatch(setTokenBoolean(false))
-
         })
         .catch(err => {
-            console.log(err);
-
             dispatch(setTokenBoolean(false))
-            setErr(err)
-
-        })
-
-
-
-
-
-    return (
-        <>
-        Xoş Gəlmisiniz !
-        </>
-
-    )
+            })
 }
-// }, [])
+}, [])
 
 
 return (
